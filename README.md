@@ -308,7 +308,7 @@ A Docker volume is used for persistent database storage.
 **Mudasir Manzoor**
 BS Computer Science Student
 
-- GitHub: [github.com/mudasirmanzoor](https://github.com/mudasirmanzoor)
+- GitHub: [github.com/mudasirmanzoor](https://github.com/MudasirManzoor4461)
 - LinkedIn: [linkedin.com/in/mudasirmanzoor](https://linkedin.com/in/mudasirmanzoor/)
 
 ---
