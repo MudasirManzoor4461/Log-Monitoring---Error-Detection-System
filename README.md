@@ -4,9 +4,16 @@ A professional log monitoring and error detection system built with **Python and
 
 The project also includes a modern web dashboard and Docker support for containerized deployment.
 
+![Python](https://img.shields.io/badge/python-3.12-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-005571?logo=fastapi)
+![Docker](https://img.shields.io/badge/docker-ready-blue?logo=docker)
+![Tests](https://img.shields.io/badge/tests-147%20passed-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-lightgrey)
+
 ---
 
 ## 📸 Project Screenshots
+
 ### 🖥️ Dashboard
 <img width="579" height="450" alt="Dashboard" src="https://github.com/user-attachments/assets/8c9b9416-87c4-4b07-b9a9-ddcd75120d61" />
 
@@ -26,49 +33,34 @@ The application running inside a Docker container.
 
 ## 🚀 Features
 
-* Log file parsing
-* Valid and invalid log line handling
-* Error detection
-* Error classification
-* Error grouping
-* SQLite database storage
-* Duplicate log protection
-* Alert generation
-* Alert persistence
-* Alert acknowledgement
-* Log search
-* Pagination
-* Time-range log filtering
-* Error trends
-* Error analytics
-* Log upload API
-* Web-based dashboard
-* Docker support
-* Docker Compose support
-* Automated testing
-* Input validation
-* Error handling
-* Safe file-path validation
-* Database constraints
-* Persistent database storage
+- Log file parsing
+- Valid and invalid log line handling
+- Error detection, classification, and grouping
+- SQLite database storage with duplicate log protection
+- Alert generation, persistence, and acknowledgement
+- Log search, pagination, and time-range filtering
+- Error trends and analytics
+- Log upload API
+- Web-based dashboard
+- Docker and Docker Compose support
+- Automated testing
+- Input validation and safe file-path validation
+- Database constraints and persistent storage
 
-> **Note:** Live file monitoring is currently under development and is not considered a completed production feature.
+> **Note:** Live file monitoring is under development and not yet a production-complete feature.
 
 ---
 
 ## 🛠️ Tech Stack
 
-* **Python 3.12**
-* **FastAPI**
-* **Pydantic**
-* **SQLite**
-* **Pytest**
-* **HTTPX**
-* **Docker**
-* **Docker Compose**
-* **HTML**
-* **CSS**
-* **JavaScript**
+| Category | Technology |
+|---|---|
+| Language | Python 3.12 |
+| Framework | FastAPI, Pydantic |
+| Database | SQLite |
+| Testing | Pytest, HTTPX |
+| Deployment | Docker, Docker Compose |
+| Frontend | HTML, CSS, JavaScript |
 
 ---
 
@@ -157,10 +149,14 @@ python -m venv venv
 
 ### 3. Activate the virtual environment
 
-**Windows PowerShell:**
-
+**Windows (PowerShell):**
 ```powershell
 venv\Scripts\activate
+```
+
+**macOS / Linux:**
+```bash
+source venv/bin/activate
 ```
 
 ### 4. Install dependencies
@@ -179,88 +175,50 @@ Start the FastAPI server:
 uvicorn app.main:app --reload
 ```
 
-The API will be available at:
-
-```text
-http://127.0.0.1:8000
-```
-
-### Interactive API Documentation
-
-```text
-http://127.0.0.1:8000/docs
-```
-
-### OpenAPI Specification
-
-```text
-http://127.0.0.1:8000/openapi.json
-```
+| Resource | URL |
+|---|---|
+| API | http://127.0.0.1:8000 |
+| Interactive Docs (Swagger) | http://127.0.0.1:8000/docs |
+| OpenAPI Spec | http://127.0.0.1:8000/openapi.json |
 
 ---
 
 ## 📊 Web Dashboard
 
-The project includes a web-based dashboard located at:
+The project includes a web-based dashboard at `frontend/index.html`.
 
-```text
-frontend/index.html
-```
+It allows users to upload log files and view:
 
-The dashboard allows users to upload log files and view important monitoring information, including:
-
-* Total logs
-* Total errors
-* Warnings
-* Critical errors
-* Error rate
-* Error categories
-* Log information
-* Analytics results
+- Total logs, errors, warnings, and critical errors
+- Error rate and error categories
+- Log details and analytics results
 
 ---
 
 ## 🔌 API Capabilities
 
 ### Logs
-
-* Upload logs
-* Retrieve logs
-* Search logs
-* Delete logs
-* Pagination
-* Filter logs by time range
+- Upload, retrieve, search, and delete logs
+- Pagination
+- Filter logs by time range
 
 ### Errors
-
-* Detect errors
-* Classify errors
-* Group errors
-* Retrieve detected errors
-* View top error categories
-* View error trends
+- Detect, classify, and group errors
+- Retrieve detected errors
+- View top error categories and error trends
 
 ### Analytics
-
-* Total logs
-* Total errors
-* Warning count
-* Critical count
-* Logs by level
-* Errors by category
-* Most common error
-* Error rate
+- Total logs / errors
+- Warning and critical counts
+- Logs by level, errors by category
+- Most common error, overall error rate
 
 ### Alerts
-
-* Generate alerts
-* Store alerts
-* Retrieve alerts
-* Acknowledge alerts
+- Generate, store, and retrieve alerts
+- Acknowledge alerts
 
 ### Live Monitoring
-
-Live monitoring components are included in the project but are currently under development and are not considered production-complete.
+Included in the codebase but still under development — not yet production-ready.
 
 ---
 
@@ -268,149 +226,93 @@ Live monitoring components are included in the project but are currently under d
 
 The application uses **SQLite** for persistent data storage.
 
-### `logs`
+**`logs` table** — timestamp, log level, message, error category
 
-Stores application log records including:
+**`alerts` table** — log ID, alert level, error category, message, creation time, acknowledgement status
 
-* Timestamp
-* Log level
-* Message
-* Error category
-
-### `alerts`
-
-Stores generated alerts including:
-
-* Log ID
-* Alert level
-* Error category
-* Message
-* Creation time
-* Acknowledgement status
-
-Database files are excluded from Git using `.gitignore`.
+Database files are excluded from Git via `.gitignore`.
 
 ---
 
 ## 🧪 Testing
 
-The project includes automated tests using **Pytest**.
-
-Run the complete test suite:
+Run the full test suite with Pytest:
 
 ```bash
 pytest
 ```
 
-### Test Result
-
 ```text
 147 passed
 ```
 
-The test suite covers major components including:
-
-* Log parsing
-* Error detection
-* Error classification
-* Error grouping
-* Analytics
-* Log monitoring
-* Alert generation
-* Database repositories
-* API routes
+Coverage includes log parsing, error detection/classification/grouping, analytics, log monitoring, alert generation, database repositories, and API routes.
 
 ---
 
 ## 🐳 Docker
 
-The application supports containerized deployment using **Docker** and **Docker Compose**.
-
-### Build the Docker Image
+Build and run the application in a container:
 
 ```bash
+# Build the image
 docker compose build
-```
 
-### Start the Container
-
-```bash
+# Start the container
 docker compose up
-```
 
-The API will be available at:
-
-```text
-http://127.0.0.1:8000
-```
-
-Swagger documentation:
-
-```text
-http://127.0.0.1:8000/docs
-```
-
-### Stop the Container
-
-```bash
+# Stop the container
 docker compose down
 ```
 
-The project uses a Docker volume for persistent database storage.
+Once running, the API is available at `http://127.0.0.1:8000` (Swagger docs at `/docs`).
+
+A Docker volume is used for persistent database storage.
 
 ---
 
 ## 🔐 Security & Reliability
 
-The project follows several production-minded practices:
-
-* Input validation
-* Safe file-path validation
-* Directory traversal protection
-* Database constraints
-* Duplicate log protection
-* Foreign-key constraints
-* Graceful error handling
-* UTF-8 file handling
-* Non-root Docker container
-* Environment-based database configuration
-* Sensitive environment files excluded from Git
-* Persistent database volume
-* Validation of API inputs
+- Input validation and safe file-path validation
+- Directory traversal protection
+- Database and foreign-key constraints
+- Duplicate log protection
+- Graceful error handling
+- UTF-8 file handling
+- Non-root Docker container
+- Environment-based database configuration
+- Sensitive environment files excluded from Git
+- Persistent database volume
 
 ---
 
 ## 📌 Future Improvements
 
-Planned improvements include:
-
-* Production-grade live log monitoring
-* PostgreSQL support
-* Background task processing
-* Real-time WebSocket dashboard
-* Email and Slack notifications
-* Authentication and authorization
-* Advanced log filtering
-* Monitoring multiple log files
-* Containerized frontend
-* CI/CD pipeline
-* Cloud deployment
-* Advanced observability and metrics
+- Production-grade live log monitoring
+- PostgreSQL support
+- Background task processing
+- Real-time WebSocket dashboard
+- Email and Slack notifications
+- Authentication and authorization
+- Advanced log filtering
+- Support for monitoring multiple log files
+- Containerized frontend
+- CI/CD pipeline
+- Cloud deployment
+- Advanced observability and metrics
 
 ---
 
 ## 👨‍💻 Author
 
-### Mudasir Manzoor
+**Mudasir Manzoor**
+BS Computer Science Student
 
-**BS Computer Science Student**
-
-**GitHub:** `github.com/mudasirmanzoor`
-
-**LinkedIn:** `linkedin.com/in/mudasirmanzoor/`
+- GitHub: [github.com/mudasirmanzoor](https://github.com/mudasirmanzoor)
+- LinkedIn: [linkedin.com/in/mudasirmanzoor](https://linkedin.com/in/mudasirmanzoor/)
 
 ---
 
 ## 📄 License
 
-This project is intended for educational, portfolio, and demonstration purposes.
+This project is intended for educational, portfolio, and demonstration purposes. Feel free to use, modify, and learn from it.
