@@ -1,0 +1,15 @@
+services:
+  app:
+    build: .
+    container_name: log-monitoring-container
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_PATH: /app/data/logs.db
+    volumes:
+      - log-monitoring-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  log-monitoring-data:
+    external: true

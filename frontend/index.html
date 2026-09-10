@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Log Monitoring & Error Detection System</title>
+
+
+    <!-- Google Font -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            font-family: "Inter", sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top right,
+                    #172554 0%,
+                    #0b1120 35%,
+                    #060b16 70%
+                );
+
+            color: #e5e7eb;
+
+            min-height: 100vh;
+
+        }
+
+
+        .container {
+
+            width: 92%;
+
+            max-width: 1300px;
+
+            margin: 0 auto;
+
+            padding: 45px 0 60px;
+
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .header-badge {
+
+            display: inline-block;
+
+            padding: 7px 12px;
+
+            border: 1px solid #1e40af;
+
+            border-radius: 999px;
+
+            background: #0f1d3d;
+
+            color: #60a5fa;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        header h1 {
+
+            font-size: 34px;
+
+            font-weight: 800;
+
+            letter-spacing: -0.8px;
+
+            color: #f8fafc;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        header p {
+
+            color: #94a3b8;
+
+            font-size: 15px;
+
+        }
+
+
+        /* =========================
+           COMMON CARD
+        ========================= */
+
+        .card-section {
+
+            background: rgba(15, 23, 42, 0.82);
+
+            border: 1px solid #1e293b;
+
+            border-radius: 16px;
+
+            padding: 28px;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.25);
+
+            backdrop-filter: blur(10px);
+
+        }
+
+
+        /* =========================
+           UPLOAD
+        ========================= */
+
+        .upload-card {
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .section-title {
+
+            font-size: 19px;
+
+            font-weight: 700;
+
+            color: #f8fafc;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .file-input {
+
+            width: 100%;
+
+            padding: 16px;
+
+            border: 1px dashed #334155;
+
+            border-radius: 10px;
+
+            background: #0b1220;
+
+            color: #cbd5e1;
+
+            margin-bottom: 18px;
+
+            font-family: inherit;
+
+        }
+
+
+        .file-input:hover {
+
+            border-color: #3b82f6;
+
+        }
+
+
+        .file-input::file-selector-button {
+
+            border: none;
+
+            background: #1e3a8a;
+
+            color: #dbeafe;
+
+            padding: 9px 14px;
+
+            border-radius: 7px;
+
+            margin-right: 12px;
+
+            cursor: pointer;
+
+            font-family: inherit;
+
+            font-weight: 600;
+
+        }
+
+
+        .file-input::file-selector-button:hover {
+
+            background: #2563eb;
+
+        }
+
+
+        button {
+
+            border: none;
+
+            padding: 12px 22px;
+
+            border-radius: 9px;
+
+            background: linear-gradient(
+                135deg,
+                #2563eb,
+                #1d4ed8
+            );
+
+            color: white;
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        button:hover {
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 8px 20px rgba(37, 99, 235, 0.25);
+
+        }
+
+
+        button:disabled {
+
+            background: #334155;
+
+            color: #64748b;
+
+            cursor: not-allowed;
+
+            transform: none;
+
+            box-shadow: none;
+
+        }
+
+
+        #status {
+
+            margin-top: 15px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            color: #60a5fa;
+
+        }
+
+
+        .info {
+
+            margin-top: 10px;
+
+            color: #64748b;
+
+            font-size: 12px;
+
+        }
+
+
+        /* =========================
+           DASHBOARD
+        ========================= */
+
+        .dashboard {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .stat-card {
+
+            background: #0f172a;
+
+            border: 1px solid #1e293b;
+
+            border-radius: 14px;
+
+            padding: 23px;
+
+            transition: 0.2s;
+
+        }
+
+
+        .stat-card:hover {
+
+            border-color: #334155;
+
+            transform: translateY(-2px);
+
+        }
+
+
+        .stat-label {
+
+            color: #94a3b8;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .stat-value {
+
+            color: #f8fafc;
+
+            font-size: 30px;
+
+            font-weight: 800;
+
+        }
+
+
+        /* =========================
+           ANALYTICS
+        ========================= */
+
+        .analytics-card {
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .analytics-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .analytics-box {
+
+            background: #0b1220;
+
+            border: 1px solid #1e293b;
+
+            border-radius: 12px;
+
+            padding: 22px;
+
+        }
+
+
+        .analytics-box h3 {
+
+            color: #94a3b8;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .analytics-box p {
+
+            color: #60a5fa;
+
+            font-size: 25px;
+
+            font-weight: 800;
+
+        }
+
+
+        .category-list {
+
+            margin-top: 10px;
+
+        }
+
+
+        .category-item {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 13px 0;
+
+            border-bottom: 1px solid #1e293b;
+
+        }
+
+
+        .category-item:last-child {
+
+            border-bottom: none;
+
+        }
+
+
+        .category-name {
+
+            color: #cbd5e1;
+
+            font-size: 13px;
+
+        }
+
+
+        .category-count {
+
+            background: #172554;
+
+            color: #60a5fa;
+
+            padding: 5px 10px;
+
+            border-radius: 999px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+        }
+
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        .results-card {
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .table-container {
+
+            overflow-x: auto;
+
+            border: 1px solid #1e293b;
+
+            border-radius: 10px;
+
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 750px;
+
+        }
+
+
+        th {
+
+            background: #0b1220;
+
+            color: #64748b;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.6px;
+
+            font-weight: 700;
+
+            padding: 15px;
+
+            text-align: left;
+
+        }
+
+
+        td {
+
+            padding: 15px;
+
+            border-top: 1px solid #1e293b;
+
+            color: #cbd5e1;
+
+            font-size: 13px;
+
+        }
+
+
+        tbody tr {
+
+            transition: 0.15s;
+
+        }
+
+
+        tbody tr:hover {
+
+            background: #111c31;
+
+        }
+
+
+        .level {
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            padding: 5px 9px;
+
+            border-radius: 6px;
+
+            display: inline-block;
+
+        }
+
+
+        .level-warning {
+
+            background: #3f2f0b;
+
+            color: #fbbf24;
+
+        }
+
+
+        .level-error {
+
+            background: #3f1515;
+
+            color: #f87171;
+
+        }
+
+
+        .level-critical {
+
+            background: #450a0a;
+
+            color: #fb7185;
+
+        }
+
+
+        .category {
+
+            color: #93c5fd;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+        }
+
+
+        .empty {
+
+            text-align: center;
+
+            padding: 35px;
+
+            color: #64748b;
+
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+
+            text-align: center;
+
+            margin-top: 35px;
+
+            color: #475569;
+
+            font-size: 12px;
+
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .dashboard {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+            .analytics-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .container {
+
+                width: 94%;
+
+                padding-top: 25px;
+
+            }
+
+            header h1 {
+
+                font-size: 25px;
+
+            }
+
+            .dashboard {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .card-section {
+
+                padding: 20px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- HEADER -->
+
+    <header>
+
+        <span class="header-badge">
+            LOG MONITORING SYSTEM
+        </span>
+
+        <h1>
+            Log Monitoring & Error Detection System
+        </h1>
+
+        <p>
+            Upload your application logs and monitor errors,
+            warnings and critical events.
+        </p>
+
+    </header>
+
+
+
+    <!-- UPLOAD -->
+
+    <section class="card-section upload-card">
+
+        <h2 class="section-title">
+            Upload Log File
+        </h2>
+
+
+        <input
+            type="file"
+            id="logFile"
+            class="file-input"
+            accept=".log,.txt"
+        >
+
+
+        <button id="analyzeButton">
+            Analyze Logs
+        </button>
+
+
+        <div id="status"></div>
+
+        <div id="fileInfo" class="info"></div>
+
+    </section>
+
+
+
+    <!-- STATISTICS -->
+
+    <section class="dashboard">
+
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Total Logs
+            </div>
+
+            <div
+                class="stat-value"
+                id="totalLogs"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Total Errors
+            </div>
+
+            <div
+                class="stat-value"
+                id="totalErrors"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Warnings
+            </div>
+
+            <div
+                class="stat-value"
+                id="totalWarnings"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Critical
+            </div>
+
+            <div
+                class="stat-value"
+                id="totalCritical"
+            >
+                0
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ANALYTICS -->
+
+    <section class="card-section analytics-card">
+
+        <h2 class="section-title">
+            Analytics
+        </h2>
+
+
+        <div class="analytics-grid">
+
+
+            <div class="analytics-box">
+
+                <h3>
+                    Error Rate
+                </h3>
+
+                <p id="errorRate">
+                    0%
+                </p>
+
+            </div>
+
+
+            <div class="analytics-box">
+
+                <h3>
+                    Most Common Error
+                </h3>
+
+                <p id="mostCommonError">
+                    None
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="analytics-box">
+
+            <h3>
+                Errors by Category
+            </h3>
+
+
+            <div
+                id="categoryList"
+                class="category-list"
+            >
+
+                <div class="empty">
+                    No analytics available yet.
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ERROR TABLE -->
+
+    <section class="card-section results-card">
+
+        <h2 class="section-title">
+            Detected Errors
+        </h2>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Time
+                        </th>
+
+                        <th>
+                            Level
+                        </th>
+
+                        <th>
+                            Message
+                        </th>
+
+                        <th>
+                            Category
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="errorTable">
+
+                    <tr>
+
+                        <td
+                            colspan="4"
+                            class="empty"
+                        >
+                            No logs analyzed yet.
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+
+    <footer>
+
+        Log Monitoring & Error Detection System
+        · Professional Monitoring Dashboard
+
+    </footer>
+
+
+</div>
+
+
+
+<script>
+
+
+    const analyzeButton =
+        document.getElementById(
+            "analyzeButton"
+        );
+
+
+    const logFile =
+        document.getElementById(
+            "logFile"
+        );
+
+
+    const status =
+        document.getElementById(
+            "status"
+        );
+
+
+    const fileInfo =
+        document.getElementById(
+            "fileInfo"
+        );
+
+
+    const totalLogs =
+        document.getElementById(
+            "totalLogs"
+        );
+
+
+    const totalErrors =
+        document.getElementById(
+            "totalErrors"
+        );
+
+
+    const totalWarnings =
+        document.getElementById(
+            "totalWarnings"
+        );
+
+
+    const totalCritical =
+        document.getElementById(
+            "totalCritical"
+        );
+
+
+    const errorRate =
+        document.getElementById(
+            "errorRate"
+        );
+
+
+    const mostCommonError =
+        document.getElementById(
+            "mostCommonError"
+        );
+
+
+    const categoryList =
+        document.getElementById(
+            "categoryList"
+        );
+
+
+    const errorTable =
+        document.getElementById(
+            "errorTable"
+        );
+
+
+
+    function resetDashboard() {
+
+        totalLogs.textContent = "0";
+
+        totalErrors.textContent = "0";
+
+        totalWarnings.textContent = "0";
+
+        totalCritical.textContent = "0";
+
+        errorRate.textContent = "0%";
+
+        mostCommonError.textContent = "None";
+
+
+        categoryList.innerHTML = "";
+
+        const categoryEmpty =
+            document.createElement(
+                "div"
+            );
+
+        categoryEmpty.className =
+            "empty";
+
+        categoryEmpty.textContent =
+            "No analytics available yet.";
+
+        categoryList.appendChild(
+            categoryEmpty
+        );
+
+
+        errorTable.innerHTML = "";
+
+        const row =
+            document.createElement(
+                "tr"
+            );
+
+        const cell =
+            document.createElement(
+                "td"
+            );
+
+        cell.colSpan = 4;
+
+        cell.className = "empty";
+
+        cell.textContent =
+            "No errors detected.";
+
+        row.appendChild(cell);
+
+        errorTable.appendChild(row);
+
+    }
+
+
+
+    function displayErrors(errors) {
+
+        errorTable.innerHTML = "";
+
+
+        if (
+            !Array.isArray(errors) ||
+            errors.length === 0
+        ) {
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+            const cell =
+                document.createElement(
+                    "td"
+                );
+
+            cell.colSpan = 4;
+
+            cell.className = "empty";
+
+            cell.textContent =
+                "No errors detected.";
+
+            row.appendChild(cell);
+
+            errorTable.appendChild(row);
+
+            return;
+
+        }
+
+
+        errors.forEach(
+            function (error) {
+
+                const row =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                const timeCell =
+                    document.createElement(
+                        "td"
+                    );
+
+
+                const levelCell =
+                    document.createElement(
+                        "td"
+                    );
+
+
+                const messageCell =
+                    document.createElement(
+                        "td"
+                    );
+
+
+                const categoryCell =
+                    document.createElement(
+                        "td"
+                    );
+
+
+                timeCell.textContent =
+                    error.timestamp || "-";
+
+
+                messageCell.textContent =
+                    error.message || "-";
+
+
+                categoryCell.textContent =
+                    error.category ||
+                    "UNKNOWN_ERROR";
+
+
+                categoryCell.className =
+                    "category";
+
+
+                const level =
+                    typeof error.level ===
+                    "string"
+                        ? error.level.toUpperCase()
+                        : "";
+
+
+                levelCell.textContent =
+                    level || "-";
+
+
+                if (
+                    level === "WARNING"
+                ) {
+
+                    levelCell.className =
+                        "level level-warning";
+
+                }
+
+
+                else if (
+                    level === "ERROR"
+                ) {
+
+                    levelCell.className =
+                        "level level-error";
+
+                }
+
+
+                else if (
+                    level === "CRITICAL"
+                ) {
+
+                    levelCell.className =
+                        "level level-critical";
+
+                }
+
+
+                row.appendChild(
+                    timeCell
+                );
+
+                row.appendChild(
+                    levelCell
+                );
+
+                row.appendChild(
+                    messageCell
+                );
+
+                row.appendChild(
+                    categoryCell
+                );
+
+
+                errorTable.appendChild(
+                    row
+                );
+
+            }
+        );
+
+    }
+
+
+
+    function displayAnalytics(data) {
+
+        if (
+            !data ||
+            typeof data !== "object"
+        ) {
+
+            return;
+
+        }
+
+
+        const rate =
+            Number(
+                data.error_rate
+            );
+
+
+        errorRate.textContent =
+            `${
+                Number.isFinite(rate)
+                    ? rate
+                    : 0
+            }%`;
+
+
+        mostCommonError.textContent =
+            data.most_common_error ||
+            "None";
+
+
+        categoryList.innerHTML =
+            "";
+
+
+        const categories =
+            data.errors_by_category;
+
+
+        if (
+            !categories ||
+            typeof categories !==
+                "object" ||
+            Array.isArray(categories) ||
+            Object.keys(categories)
+                .length === 0
+        ) {
+
+            const empty =
+                document.createElement(
+                    "div"
+                );
+
+            empty.className =
+                "empty";
+
+            empty.textContent =
+                "No categorized errors found.";
+
+            categoryList.appendChild(
+                empty
+            );
+
+            return;
+
+        }
+
+
+        Object.entries(categories)
+
+            .sort(
+                function (a, b) {
+
+                    return Number(b[1]) -
+                        Number(a[1]);
+
+                }
+            )
+
+            .forEach(
+                function ([category, count]) {
+
+
+                    const item =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    item.className =
+                        "category-item";
+
+
+                    const name =
+                        document.createElement(
+                            "span"
+                        );
+
+
+                    name.className =
+                        "category-name";
+
+
+                    name.textContent =
+                        category;
+
+
+                    const countElement =
+                        document.createElement(
+                            "span"
+                        );
+
+
+                    countElement.className =
+                        "category-count";
+
+
+                    countElement.textContent =
+                        count;
+
+
+                    item.appendChild(
+                        name
+                    );
+
+                    item.appendChild(
+                        countElement
+                    );
+
+
+                    categoryList.appendChild(
+                        item
+                    );
+
+                }
+            );
+
+    }
+
+
+
+    analyzeButton.addEventListener(
+        "click",
+        async function () {
+
+
+            const file =
+                logFile.files[0];
+
+
+            if (!file) {
+
+                status.textContent =
+                    "Please select a log file.";
+
+                return;
+
+            }
+
+
+            const fileName =
+                file.name.toLowerCase();
+
+
+            if (
+                !fileName.endsWith(".log") &&
+                !fileName.endsWith(".txt")
+            ) {
+
+                status.textContent =
+                    "Only .log and .txt files are allowed.";
+
+                return;
+
+            }
+
+
+            const maxFileSize =
+                5 * 1024 * 1024;
+
+
+            if (
+                file.size >
+                maxFileSize
+            ) {
+
+                status.textContent =
+                    "File size cannot exceed 5 MB.";
+
+                return;
+
+            }
+
+
+            resetDashboard();
+
+
+            status.textContent =
+                "Analyzing logs...";
+
+
+            fileInfo.textContent =
+                `Selected file: ${file.name}`;
+
+
+            analyzeButton.disabled =
+                true;
+
+
+            try {
+
+
+                const formData =
+                    new FormData();
+
+
+                formData.append(
+                    "file",
+                    file
+                );
+
+
+                const response =
+                    await fetch(
+                        "http://127.0.0.1:8000/logs/upload",
+                        {
+                            method: "POST",
+                            body: formData
+                        }
+                    );
+
+
+                let data;
+
+
+                try {
+
+                    data =
+                        await response.json();
+
+                }
+
+                catch {
+
+                    throw new Error(
+                        "Server returned an invalid response."
+                    );
+
+                }
+
+
+                if (!response.ok) {
+
+                    let errorMessage =
+                        "Unable to analyze logs.";
+
+                    if (
+                        data &&
+                        typeof data.detail ===
+                            "string"
+                    ) {
+
+                        errorMessage =
+                            data.detail;
+
+                    }
+
+                    throw new Error(
+                        errorMessage
+                    );
+
+                }
+
+
+                if (
+                    !data ||
+                    data.success !== true
+                ) {
+
+                    throw new Error(
+                        "Log analysis was not successful."
+                    );
+
+                }
+
+
+                const parsedLogs =
+                    Number(
+                        data.parsed_logs
+                    ) || 0;
+
+
+                const detectedErrors =
+                    Number(
+                        data.detected_errors
+                    ) || 0;
+
+
+                totalLogs.textContent =
+                    parsedLogs;
+
+
+                totalErrors.textContent =
+                    detectedErrors;
+
+
+                const errors =
+                    Array.isArray(
+                        data.errors
+                    )
+                        ? data.errors
+                        : [];
+
+
+                /*
+                 * Use backend analytics
+                 * instead of calling /analytics.
+                 */
+
+                const analytics =
+                    data.analytics;
+
+
+                if (
+                    analytics &&
+                    typeof analytics ===
+                        "object"
+                ) {
+
+                    totalLogs.textContent =
+                        Number(
+                            analytics.total_logs
+                        ) || parsedLogs;
+
+
+                    totalErrors.textContent =
+                        Number(
+                            analytics.total_errors
+                        ) || detectedErrors;
+
+
+                    totalWarnings.textContent =
+                        Number(
+                            analytics.total_warnings
+                        ) || 0;
+
+
+                    totalCritical.textContent =
+                        Number(
+                            analytics.total_critical
+                        ) || 0;
+
+
+                    displayAnalytics(
+                        analytics
+                    );
+
+                }
+
+
+                else {
+
+                    /*
+                     * Safe fallback if the
+                     * analytics object is missing.
+                     */
+
+                    let warningCount = 0;
+
+                    let criticalCount = 0;
+
+
+                    errors.forEach(
+                        function (error) {
+
+                            const level =
+                                typeof error.level ===
+                                "string"
+                                    ? error.level.toUpperCase()
+                                    : "";
+
+
+                            if (
+                                level ===
+                                "WARNING"
+                            ) {
+
+                                warningCount++;
+
+                            }
+
+
+                            if (
+                                level ===
+                                "CRITICAL"
+                            ) {
+
+                                criticalCount++;
+
+                            }
+
+                        }
+                    );
+
+
+                    totalWarnings.textContent =
+                        warningCount;
+
+
+                    totalCritical.textContent =
+                        criticalCount;
+
+                }
+
+
+                displayErrors(
+                    errors
+                );
+
+
+                const invalidLines =
+                    Number(
+                        data.invalid_lines
+                    ) || 0;
+
+
+                fileInfo.textContent =
+                    `File: ${
+                        data.filename ||
+                        file.name
+                    } | Parsed: ${
+                        parsedLogs
+                    } | Errors: ${
+                        detectedErrors
+                    } | Invalid lines: ${
+                        invalidLines
+                    }`;
+
+
+                status.textContent =
+                    "Analysis completed successfully.";
+
+
+            }
+
+
+            catch (error) {
+
+                console.error(error);
+
+
+                status.textContent =
+                    error.message ||
+                    "Unable to analyze logs. Please check the backend.";
+
+            }
+
+
+            finally {
+
+                analyzeButton.disabled =
+                    false;
+
+            }
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

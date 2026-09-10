@@ -1,0 +1,9 @@
+2026-09-08 10:00:00 INFO Server started
+2026-09-08 10:01:00 ERROR Database connection failed
+this is completely invalid
+2026-99-99 10:02:00 ERROR Invalid date
+2026-09-08 ERROR Missing time
+2026-09-08 10:03:00 UNKNOWN Unknown log level
+2026-09-08 10:04:00 WARNING
+2026-09-08 10:05:00 CRITICAL Payment gateway is unavailable
+2026-09-08 10:06:00 INFO
