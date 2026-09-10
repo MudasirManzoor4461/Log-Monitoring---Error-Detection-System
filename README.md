@@ -8,17 +8,15 @@ The project also includes a modern web dashboard and Docker support for containe
 
 ## 📸 Project Screenshots
 ### 🖥️ Dashboard
-![alt text](Dashboard.png)
 
 The web dashboard provides an overview of uploaded logs, errors, warnings, critical errors, error rate, and error categories.
 
 ### 📚 FastAPI Documentation
-![alt text](api-docs.png)
 
 Interactive REST API documentation powered by FastAPI and Swagger UI.
 
 ### 🐳 Docker Deployment
-![alt text](docker.png)
+
 The application running inside a Docker container.
 
 ---
